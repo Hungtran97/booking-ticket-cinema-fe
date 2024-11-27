@@ -1,13 +1,13 @@
 import React from 'react';
-import Main from './Components/layout/Main';
 import { Route, Routes } from 'react-router-dom';
-import AuthenticationForm from './Components/layout/Authentication';
+import AuthenticationForm from './Components/layouts/Authentication';
+import MainLayout from './Components/layouts/Main';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/home" element={<Main />} />
+        <Route path="/home" element={<MainLayout />} />
         <Route path="/login" element={<AuthenticationForm />} />
       </Routes>
     </div>
