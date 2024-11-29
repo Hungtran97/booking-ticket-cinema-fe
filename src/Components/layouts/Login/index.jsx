@@ -1,7 +1,10 @@
-import React from 'react';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Flex } from 'antd';
+import { LockOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Flex, Form, Input } from 'antd';
 import { createStyles } from 'antd-style';
+import React from 'react';
+import EmailField from '../Components/EmailField';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 const useStyles = createStyles(({ token, css }) => ({
   container: css`
@@ -28,33 +31,35 @@ const useStyles = createStyles(({ token, css }) => ({
       width: 50%;
     }
   `,
-  title: {
-    display: 'flex',
-    justifyContent: 'center',
-    padding: '10px 0 20px 0',
-    fontWeight: 'bold',
-  },
+  title: css`
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 20px 0;
+    font-weight: bold;
+  `,
 }));
-const AuthenticationForm = () => {
+const LogLoginForm = () => {
   const { styles, cx } = useStyles();
-  const onFinish = (values) => {
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Email is required'),
+  });
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
+
+  const onSubmit = (values) => {
     console.log('Received values of form: ', values);
   };
   return (
     <div className={styles.container}>
-      <Form name="login" onFinish={onFinish} className={styles.form}>
-        <span className={cx(styles.title)}> LOGIN FORM </span>
-        <Form.Item
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Email!',
-            },
-          ]}
-        >
-          <Input prefix={<UserOutlined />} placeholder="Email" />
-        </Form.Item>
+      <Form name="login" onFinish={handleSubmit(onSubmit)} className={styles.form}>
+        <span className={styles.title}> LOGIN FORM </span>
+        <EmailField control={control} errors={errors} />
         <Form.Item
           name="password"
           rules={[
@@ -85,4 +90,4 @@ const AuthenticationForm = () => {
     </div>
   );
 };
-export default AuthenticationForm;
+export default LogLoginForm;

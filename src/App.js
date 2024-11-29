@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import AuthenticationForm from './Components/layouts/Authentication';
+import LoginForm from './Components/layouts/Login';
 import MainLayout from './Components/layouts/Main';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/home" element={<MainLayout />} />
-        <Route path="/login" element={<AuthenticationForm />} />
+        <Route path="/login" element={<LoginForm />} />
       </Routes>
     </div>
   );
