@@ -1,10 +1,11 @@
-import { LockOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Flex, Form, Input } from 'antd';
-import { createStyles } from 'antd-style';
 import React from 'react';
-import EmailField from '../Components/EmailField';
+import { LockOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Form, Input } from 'antd';
+import { createStyles } from 'antd-style';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import EmailField from '../Components/EmailField';
 
 const useStyles = createStyles(({ token, css }) => ({
   container: css`
@@ -37,11 +38,24 @@ const useStyles = createStyles(({ token, css }) => ({
     padding: 10px 0 20px 0;
     font-weight: bold;
   `,
+  button: css`
+    margin-top: 10px;
+    text-align: center;
+  `,
+  flex: css`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  `,
 }));
+
 const LogLoginForm = () => {
-  const { styles, cx } = useStyles();
+  const { styles } = useStyles();
+
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string().required('Password is required'),
+    remember: Yup.boolean(),
   });
 
   const {
@@ -50,44 +64,57 @@ const LogLoginForm = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      remember: false,
+    },
   });
 
   const onSubmit = (values) => {
     console.log('Received values of form: ', values);
+    // Handle form submission, e.g., API call
   };
+
   return (
     <div className={styles.container}>
-      <Form name="login" onFinish={handleSubmit(onSubmit)} className={styles.form}>
-        <span className={styles.title}> LOGIN FORM </span>
+      <Form name="login" onFinish={handleSubmit(onSubmit)} className={styles.form} layout="vertical">
+        <span className={styles.title}>LOGIN FORM</span>
+
+        {/* Email Field */}
         <EmailField control={control} errors={errors} />
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Password!',
-            },
-          ]}
-        >
-          <Input.Password prefix={<LockOutlined />} type="password" placeholder="Password" />
+
+        {/* Password Field */}
+        <Form.Item label="Password" validateStatus={errors.password ? 'error' : ''} help={errors.password?.message}>
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => <Input.Password {...field} prefix={<LockOutlined />} placeholder="Password" />}
+          />
         </Form.Item>
+
+        {/* Remember Me and Forgot Password */}
         <Form.Item>
-          <Flex justify="space-between" align="center">
+          <div className={styles.flex}>
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
             <a href="">Forgot password</a>
-          </Flex>
+          </div>
         </Form.Item>
 
+        {/* Submit Button and Register Link */}
         <Form.Item>
           <Button block type="primary" htmlType="submit">
             Log in
           </Button>
-          or <a href="">Register now!</a>
+          <div className={styles.button}>
+            or <a href="">Register now!</a>
+          </div>
         </Form.Item>
       </Form>
     </div>
   );
 };
+
 export default LogLoginForm;
