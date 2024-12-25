@@ -1,9 +1,10 @@
-const { default: axios } = require('axios');
+import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: '',
+  baseURL: 'https://dummyjson.com',
   headers: {
     'Content-Type': 'application/json',
+    withCredentials: 'include',
   },
 });
 // Add a request interceptor

@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form';
 
 const EmailField = ({ control, errors }) => {
   return (
-    <Form.Item validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
+    <Form.Item label="Email" validateStatus={errors.email ? 'error' : ''} help={errors.email?.message}>
       <Controller
         name="email"
         control={control}
