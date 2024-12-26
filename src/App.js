@@ -1,14 +1,21 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import MainLayout from './Components/layouts/Main';
-import Login from 'Components/layouts/Login';
+import Main from './layouts/Main';
+import Login from 'layouts/Login';
+import Users from 'Components/Users';
+import Home from 'Components/Home';
+import NotFound from 'layouts/NotFound';
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/home" element={<MainLayout />} />
+        <Route path="/" element={<Main />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/users" element={<Users />} />
+        </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

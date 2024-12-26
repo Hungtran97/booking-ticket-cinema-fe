@@ -1,9 +1,11 @@
 import { Layout } from 'antd';
 import { createStyles } from 'antd-style';
 import React, { useState } from 'react';
-import AppHeader from '../Components/AppHeader';
-import MainContent from '../Components/MainContent';
-import Sidebar from '../Components/Sidebar';
+import AppHeader from '../../Components/AppHeader';
+import Users from '../../Components/Users';
+import Sidebar from '../../Components/Sidebar';
+import { Outlet, useLocation } from 'react-router-dom';
+import Home from 'Components/Home';
 
 const useStyles = createStyles(({ css }) => ({
   layoutStyle: css`
@@ -13,23 +15,25 @@ const useStyles = createStyles(({ css }) => ({
   `,
 }));
 
-const MainLayout = () => {
+const Main = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { styles } = useStyles();
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
+  const location = useLocation();
+  const pathname = location.pathname;
 
   return (
     <Layout className={styles.layoutStyle}>
-      <Sidebar collapsed={collapsed} />
+      <Sidebar collapsed={collapsed} activePath={pathname} />
       <Layout>
         <AppHeader collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
-        <MainContent />
+        <Outlet />
       </Layout>
     </Layout>
   );
 };
 
-export default MainLayout;
+export default Main;

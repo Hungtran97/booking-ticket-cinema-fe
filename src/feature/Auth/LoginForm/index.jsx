@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Checkbox, Form } from 'antd';
 import { createStyles } from 'antd-style';
-import EmailField from 'Components/layouts/Components/EmailField';
-import PasswordField from 'Components/layouts/Components/PasswordField';
+import EmailField from 'Components/EmailField';
+import PasswordField from 'Components/PasswordField';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 

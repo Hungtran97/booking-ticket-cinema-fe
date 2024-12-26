@@ -14,9 +14,9 @@ const useStyles = createStyles(({ token, css }) => ({
   `,
 }));
 
-const MainContent = () => {
+const Users = () => {
   const { styles } = useStyles();
-  return <Content className={styles.contentStyle}>Content</Content>;
+  return <Content className={styles.contentStyle}>Users Content</Content>;
 };
 
-export default MainContent;
+export default Users;
