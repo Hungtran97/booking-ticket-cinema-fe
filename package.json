@@ -17,15 +17,14 @@
     "react-hook-form": "^7.53.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.1",
-    "react-scripts": "^5.0.1",
     "redux": "^5.0.1",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vite",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -45,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^6.3.5"
   }
 }
